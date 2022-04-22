@@ -12,6 +12,14 @@ router.get('/api/fav/', (req, res) => {
   });
 });
 // Get one fav
+router.get('/api/fav/:id', (req, res) => {
+  Fav.findById(req.params.id, (err, fav) => {
+    if (err) {
+      res.send(err);
+    }
+    res.json(fav);
+  });
+});
 // Create one fav
 // Delete one fav
 
