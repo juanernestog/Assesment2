@@ -11,8 +11,8 @@ db.once('open', () => console.log(`connected to mongoose`)); // Log successful c
 app.use(express.json()); // Use JSON
 
 //TO DO: add routes
-//const userRouter = require('./routes/user');
-// app.use('/user', userRouter);
+const userRouter = require('./routes/user');
+app.use('/user', userRouter);
 // const favRouter = require('./routes/fav');
 // app.use('/fav', favRouter);
 // const favListRouter = require('./routes/favList');
