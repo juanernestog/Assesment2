@@ -5,9 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-<<<<<<< HEAD
     "dev": "nodemon server",
->>>>>>> 5111c9d78ae154d573e969fee78bdc2097c0d25e
     "test": "jest"
   },
   "keywords": [],
