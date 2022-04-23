@@ -2,9 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 
-// TO DO: add auth
+// TO DO: add bcrypted password
 router.get('/auth/local/login', (req, res) => {
   // on route /auth/local/login
   const token = jwt.sign(
