@@ -4,41 +4,34 @@ const Fav = require('../models/fav');
 
 // TO DO: add routes
 // Get all fav
-router.get('/api/fav/', (req, res) => {
+router.get('/api/fav/', async (req, res) => {
   // on route  /api/fav/  send back all favs
-  Fav.find({}, (err, fav) => {
-    // find all favs
-    if (err) {
-      res.send(err);
-    }
-    res.json(fav);
-  });
+  try {
+    const favs = await Fav.find();
+    res.json(favs);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 // Get one fav
-router.get('/api/fav/:id', (req, res) => {
-  Fav.findById(req.params.id, (err, fav) => {
-    if (err) {
-      res.send(err);
-    }
-    res.json(fav);
-  });
+router.get('/api/fav/:id', getFav, (req, res) => {
+  // on route  /api/fav/:id  send back one fav
+  res.json(res.fav);
 });
 // Create one fav
-router.post('/api/fav/', (req, res) => {
+router.post('/api/fav/', async (req, res) => {
   const fav = new Fav({
     ownerID: req.body.userID,
     title: req.body.title,
     description: req.body.description,
     URL: req.body.URL,
   });
-  fav.save((err) => {
-    if (err) {
-      res.send(err);
-    }
-    res.json({
-      message: 'Fav created',
-    });
-  });
+  try {
+    const newFav = await fav.save();
+    res.status(201).json(newFav); // success created new fav
+  } catch (error) {
+    res.status(400).json({ message: error.message }); // bad request
+  }
 });
 // Delete one fav
 router.delete('/api/fav/:id', (req, res) => {
@@ -52,5 +45,22 @@ router.delete('/api/fav/:id', (req, res) => {
     });
   });
 });
+
+async function getFav(req, res, next) {
+  // get one fav by id
+  let fav;
+  try {
+    fav = await Fav.findById(req.params.id);
+    if (fav) {
+      res.json(fav);
+    } else {
+      return res.status(404).json({ message: 'Fav not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+  res.fav = fav;
+  next();
+}
 
 module.exports = router;
