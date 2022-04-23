@@ -32,5 +32,16 @@ router.post('/api/fav/', (req, res) => {
   });
 });
 // Delete one fav
+router.delete('/api/fav/:id', (req, res) => {
+  // delete one fav by id
+  Fav.remove({ _id: req.params.id }, (err, fav) => {
+    if (err) {
+      res.send(err);
+    }
+    res.json({
+      message: 'Successfully deleted',
+    });
+  });
+});
 
 module.exports = router;
