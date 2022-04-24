@@ -36,7 +36,6 @@ router.post('/', async (req, res) => {
 });
 // Delete one fav
 router.delete('/:id', (req, res) => {
-  res.send('delete a fav');
   // delete one fav by id
   Fav.remove({ _id: req.params.id }, (err, fav) => {
     if (err) {
