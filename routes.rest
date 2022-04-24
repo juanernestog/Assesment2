@@ -1,0 +1,25 @@
+GET  http://localhost:3000/api/fav/
+###
+GET  http://localhost:3000/api/fav/6265bbdcc99c02dd236a625e
+###
+POST http://localhost:3000/api/fav/
+Content-Type: application/json
+
+{
+  "ownerId": "6265bbdcc99c02dd236a625e",
+  "title": "pokemon",
+  "description": "Favourite pokemons",
+  "URL": "http://www.pokemon.com"
+}
+###
+PUT http://localhost:3000/api/fav/:id
+Content-Type: application/json
+
+{
+  "title": "puchamon",
+  "description": "Favourite pushmon",
+  "URL": "http://www.pokemon.com.com"
+}
+###
+DELETE http://localhost:3000/api/fav/:id
+

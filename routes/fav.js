@@ -4,24 +4,26 @@ const Fav = require('../models/fav');
 
 // TO DO: add routes
 // Get all fav
-router.get('/api/fav/', async (req, res) => {
+router.get('/', async (req, res) => {
   // on route  /api/fav/  send back all favs
+  res.send('get all favs'); // testing route
   try {
     const favs = await Fav.find();
     res.json(favs);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.json({ message: error.message });
+    // res.status(500).json({ message: error.message });
   }
 });
 // Get one fav
-router.get('/api/fav/:id', getFav, (req, res) => {
+router.get('/:id', getFav, (req, res) => {
   // on route  /api/fav/:id  send back one fav
   res.json(res.fav);
 });
 // Create one fav
-router.post('/api/fav/', async (req, res) => {
+router.post('/', async (req, res) => {
   const fav = new Fav({
-    ownerID: req.body.userID,
+    ownerID: req.body.ownerId,
     title: req.body.title,
     description: req.body.description,
     URL: req.body.URL,
@@ -34,7 +36,8 @@ router.post('/api/fav/', async (req, res) => {
   }
 });
 // Delete one fav
-router.delete('/api/fav/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
+  res.send('delete a fav');
   // delete one fav by id
   Fav.remove({ _id: req.params.id }, (err, fav) => {
     if (err) {
