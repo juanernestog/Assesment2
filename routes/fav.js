@@ -6,7 +6,6 @@ const Fav = require('../models/fav');
 // Get all fav
 router.get('/', async (req, res) => {
   // on route  /api/fav/  send back all favs
-  res.send('get all favs'); // testing route
   try {
     const favs = await Fav.find();
     res.json(favs);
