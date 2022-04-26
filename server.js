@@ -16,11 +16,11 @@ app.use(express.json()); // Use JSON
 
 //TO DO: add routes
 const userRouter = require('./routes/user');
-app.use('/', userRouter);
-const favRouter = require('./routes/fav');
-app.use('/api/fav', favRouter);
-// const favListRouter = require('./routes/favList');
-// app.use('/favList', favListRouter);
+app.use('/api/fav', userRouter);
+// const favRouter = require('./routes/fav');
+// app.use('/api/fav', favRouter);
+const auth = require('./routes/auth');
+app.use('/auth/local/login', auth);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
