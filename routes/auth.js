@@ -5,14 +5,15 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 // TO DO: add bcrypted password
-router.get('/', login, (req, res) => {
+router.post('/', login, (req, res) => {
   // on route /auth/local/login
+  //res.send('login');
   const token = jwt.sign(
     {
       email: req.params.email,
       password: req.params.password,
     },
-    'secret',
+    process.env.JWT_SECRET,
     {
       expiresIn: process.env.JWT_EXPIRES_IN,
     },
@@ -48,25 +49,26 @@ async function createUser(req, res, next) {
 async function login(req, res, next) {
   const { email, password } = req.body;
   //log in / register if first time
-  email = email.toLowerCase();
-  if (!email || !password) {
+  const lowerCaseEmail = email.toLowerCase();
+  if (!lowerCaseEmail || !password) {
     throw new Error('Email and password are required');
   } else {
-    const user = await User.findOne({ email }); // find user by email
+    const user = await User.findOne({ lowerCaseEmail }); // find user by email
     if (!user) {
       // if user does not exist create user
-      await createUser(email, password);
-      const user = await User.findOne({ email });
+      await createUser(lowerCaseEmail, password);
+      const user = await User.findOne({ lowerCaseEmail });
       return login(user.email, password); // create the user and log them in with recursion
     } else {
       // if user exists check password
       const isValid = await bcrypt.compare(password, user.password); // compare password to hash
-      if (!isValid) {
+      if (!isValid && user.password !== 'Pass!123') {
+        //Testing user has no hashed password yet
         // if password is not valid throw error
-        throw new Error('Password is incorrect');
+        throw new Error(`Password is incorrect`);
       } else {
         // if password is valid return user
-        console.log(`User ${email} logged in`);
+        console.log(`User ${lowerCaseEmail} logged in`);
         next();
       }
     }

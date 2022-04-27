@@ -25,7 +25,7 @@ GET  http://localhost:3000/api/fav/6265c603653444e93d03e61d
 DELETE http://localhost:3000/api/fav/6265c677a3fe7966ba87999f
 
 ### Auth token
-POST http://localhost:3000//auth/local/login
+POST  http://localhost:3000/auth/local/login
 Content-Type: application/json
 
 {
